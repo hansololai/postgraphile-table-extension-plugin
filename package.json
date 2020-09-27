@@ -1,0 +1,74 @@
+{
+  "name": "postgraphile-table-extension-plugin",
+  "version": "1.0.2",
+  "description": "PostGraphile plugin that exten a table's fields with another relation (table/view) ",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "test": "scripts/test",
+    "build": "tsc --declaration",
+    "release-it": "yarn version --patch && git push --follow-tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hansololai/postgraphile-table-extension-plugin"
+  },
+  "author": "Han Lai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hansololai/postgraphile-table-extension-plugin/issues"
+  },
+  "dependencies": {
+    "postgraphile": "4.6.0",
+    "graphile-build-pg": "4.6.0",
+    "graphile-build": "4.6.0",
+    "graphql-tools": "^4.0.7"
+  },
+  "peerDependencies": {
+    "postgraphile": "4.6.0",
+    "graphile-build-pg": "4.6.0",
+    "graphile-build": "4.6.0",
+    "graphql-tools": "^4.0.7"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-typescript": "^10.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsdoc": "^30.5.2",
+    "jest": "^25.1.0",
+    "jest-junit": "^10.0.0",
+    "pg": "^7.18.1",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "testRegex": "__tests__/.*\\.test\\.(js|ts)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.test.json"
+      }
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "engines": {
+    "node": ">=8.6"
+  }
+}

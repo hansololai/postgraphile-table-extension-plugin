@@ -1,0 +1,19 @@
+query text {
+  distinctFromInsensitive: allFilterables {
+    nodes{
+      id
+    }
+  }
+  uniqueTaggByUniqueTaggableIdAndUniqueTaggableType(uniqueTaggableId: 1, uniqueTaggableType:"Parent" ){
+    id
+    content
+  }
+  taggByTaggableIdAndTaggableType(taggableId: 2, taggableType: "Parent"){
+    id
+    content
+  }
+  viewTagByUniqueTaggableIdAndUniqueTaggableType(uniqueTaggableId: 1, uniqueTaggableType:"Parent"){
+    id
+    content
+  }
+}
