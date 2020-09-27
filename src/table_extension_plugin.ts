@@ -33,13 +33,19 @@ const extendRelationWithAnother = (fk: PgConstraint, forward:boolean,
   } = context;
 
   const innerTable = forward ? fk.foreignClass : fk.class;
+  const mainTable = forward ? fk.class : fk.foreignClass;
   const anotherTableKeyAttribute = forward ? fk.foreignKeyAttributes[0] : fk.keyAttributes[0];
-  const thisTableKeyAttribute = forward ? fk.keyAttributes[0] : fk.keyAttributes[0];
+  const thisTableKeyAttribute = forward ? fk.keyAttributes[0] : fk.foreignKeyAttributes[0];
   const innerTableFields = innerTable.attributes.reduce((acc, cur) => {
     if (cur.name === anotherTableKeyAttribute.name) {
       return acc;
     }
     const fieldName = inflection.camelCase(cur.name);
+    // We don't want to override existing attributes, so if it already have one, skipt it
+    if (mainTable.attributes.find((a) => (a.name === cur.name))) {
+      return acc;
+    }
+
     return {
       ...acc,
       [fieldName]: fieldWithHooks(
@@ -125,9 +131,6 @@ export const tableExtensionPlugin: Plugin = (builder) => {
     // For the table, we iterate all the foreign keys
     const foreignKeys = (table as PgClass).constraints.filter((c) => c.type === 'f');
     // only on location table
-    if ((table as PgClass).name !== 'portfolios') {
-      return fields;
-    }
     // Forward extension, meaning we are going to add some foreign classes's attributes to this table
     // the foreign class is connected to this table by a foreignKey from this table.
     const forwardExtensionFields = foreignKeys.reduce((accFields, fk) => {

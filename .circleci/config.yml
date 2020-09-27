@@ -1,0 +1,131 @@
+version: 2
+jobs:
+  node8.10_pg9.6:
+    docker:
+      - image: circleci/node:8.10-stretch
+      - image: circleci/postgres:9.6-alpine-postgis
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+  node10_pg10:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/postgres:10-alpine-postgis
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+  node10_pg11:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/postgres:11-alpine-postgis
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run:
+          name: test
+          command: |
+            ./cc-test-reporter before-build
+            yarn test --coverage --reporters=jest-junit --ci
+            ./cc-test-reporter after-build --exit-code $?
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+            JEST_JUNIT_OUTPUT: /tmp/test_result/jest/results.xml
+      - store_test_results:
+          # Circle2.0 does not support use env variable here yet, so we type it in manually, instead of $CIRLCE_TEST_REPORTS
+          path: /tmp/test_result/jest/
+      - persist_to_workspace:
+          root: ~/
+          paths: .
+  deploy:
+    docker: # run the steps with Docker
+      - image: circleci/node:11-stretch # ...with this image as the primary container; this is where all `steps` will run
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Build Repo
+          command: yarn build
+      - run:
+          name: Publish Package
+          command: npm publish
+
+workflows:
+  version: 2
+  # test:
+  # jobs:
+  #   # - node8.10_pg9.6postgis
+  #   # - node10_pg10postgis
+  #   - node10_pg11:
+  #       filter:
+  #         branches:
+  #           ignore: master
+  build-deploy:
+    jobs:
+      - node10_pg11:
+          filters: # this is necessary here, because it is by default no run on any tags, then the deploy won't run on tags
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - node10_pg11
+          filters:
+            # Only deploy when there's tags pushed
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/

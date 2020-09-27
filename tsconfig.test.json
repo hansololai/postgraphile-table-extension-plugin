@@ -7,7 +7,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "commonjs",
     "target": "es6",
     "outDir": "dist",
@@ -19,7 +19,7 @@
       }
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "*.ts"],
   "exclude": ["node_modules", "__tests__/**/*.ts"],
   "rules": {
     "max-line-length": [

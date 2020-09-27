@@ -5,8 +5,7 @@ import { readdirSync, readFile as rawReadFile } from 'fs';
 import { resolve as resolvePath } from 'path';
 import { printSchema } from 'graphql/utilities';
 import {
-  addFakeUniqueConstraintFromIndex,
-  uniqueConstraintFromSmartComment,
+  tableExtensionPlugin
 } from '../../src';
 // import debug from 'debug';
 
@@ -38,15 +37,8 @@ beforeAll(() => {
     ] = await Promise.all([
       createPostGraphileSchema(pgClient, ['p'], {
         appendPlugins: [
-          addFakeUniqueConstraintFromIndex,
-          uniqueConstraintFromSmartComment,
+          tableExtensionPlugin
         ],
-        graphileBuildOptions: {
-          connectionFilterPolymorphicForward: true,
-          connectionFilterRelations: true,
-          connectionFilterAllowNullInput: true,
-          connectionFilterAllowEmptyObjectInput: true,
-        },
       }),
     ]);
 
