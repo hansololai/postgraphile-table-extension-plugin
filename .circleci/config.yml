@@ -84,7 +84,7 @@ jobs:
             ./cc-test-reporter after-build --exit-code $?
           environment:
             TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
-            JEST_JUNIT_OUTPUT: /tmp/test_result/jest/results.xml
+            JEST_JUNIT_OUTPUT_DIR: /tmp/test_result/jest/
       - store_test_results:
           # Circle2.0 does not support use env variable here yet, so we type it in manually, instead of $CIRLCE_TEST_REPORTS
           path: /tmp/test_result/jest/
