@@ -19,7 +19,7 @@ export const isFkConstraintUnique = (fk:PgConstraint) => {
 const isSingleKeyUniqueFkConstraint = (
   fk:PgConstraint,
 ) => isFkConstraintUnique(fk) && fk.foreignClass
-  && fk.foreignKeyAttributes.length === 1 && fk.keyAttributes.length !== 1;
+  && fk.foreignKeyAttributes.length === 1 && fk.keyAttributes.length === 1;
 
 const extendRelationWithAnother = (fk: PgConstraint, forward:boolean,
   build: GraphileBuild, context: Context<any>) => {
