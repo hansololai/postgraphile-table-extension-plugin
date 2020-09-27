@@ -16,6 +16,11 @@ export const isFkConstraintUnique = (fk:PgConstraint) => {
   ));
   return isUnique;
 };
+const isSingleKeyUniqueFkConstraint = (
+  fk:PgConstraint,
+) => isFkConstraintUnique(fk) && fk.foreignClass
+  && fk.foreignKeyAttributes.length === 1 && fk.keyAttributes.length !== 1;
+
 const extendRelationWithAnother = (fk: PgConstraint, forward:boolean,
   build: GraphileBuild, context: Context<any>) => {
   if (!fk.foreignClass) return {};
@@ -134,10 +139,10 @@ export const tableExtensionPlugin: Plugin = (builder) => {
     // Forward extension, meaning we are going to add some foreign classes's attributes to this table
     // the foreign class is connected to this table by a foreignKey from this table.
     const forwardExtensionFields = foreignKeys.reduce((accFields, fk) => {
-      const isUnique = isFkConstraintUnique(fk);
       // THe foreign key must be unique, right now let's force foreignKey is just single column
-      if (!isUnique || !fk.foreignClass || fk.keyAttributes.length !== 1
-        || fk.foreignKeyAttributes.length !== 1) return accFields;
+      if (!isSingleKeyUniqueFkConstraint(fk)) {
+        return accFields;
+      }
       // now we check the attribute smart tag
       const { extensionFrom = [] } = fk.keyAttributes[0].tags;
       const extensionFromArray = Array.isArray(extensionFrom) ? extensionFrom : [extensionFrom];
@@ -158,10 +163,8 @@ export const tableExtensionPlugin: Plugin = (builder) => {
       if (!extensionToArray.includes(table.name)) {
         return acc;
       }
-      const isUnique = isFkConstraintUnique(cur);
       // skip it if it is not single key unique constraint
-      if (!isUnique || !cur.foreignClass || cur.foreignKeyAttributes.length !== 1
-        || cur.keyAttributes.length !== 1) {
+      if (!isSingleKeyUniqueFkConstraint(cur)) {
         return acc;
       }
       const innerTableFields = extendRelationWithAnother(cur, false,
