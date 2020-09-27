@@ -24,7 +24,7 @@ alter table p.users add constraint unique_forward_user_info_id UNIQUE (forward_u
 
 create table p.posts(
   id serial primary key,
-  author_id int references users (id)
+  author_id int references p.users (id)
 );
 
 create table p.user_extra_infos
