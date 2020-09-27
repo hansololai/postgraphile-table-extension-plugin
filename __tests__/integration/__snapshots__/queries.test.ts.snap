@@ -8,18 +8,12 @@ Object {
         Object {
           "email": "email1",
           "id": 1,
-          "userExtraInfoByUserId": Object {
-            "email": "email1",
-            "id": 1,
-          },
+          "phone": "phone1",
         },
         Object {
           "email": "email2",
           "id": 2,
-          "userExtraInfoByUserId": Object {
-            "email": "email2",
-            "id": 2,
-          },
+          "phone": "phone2",
         },
       ],
     },

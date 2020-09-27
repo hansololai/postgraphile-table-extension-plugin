@@ -2,11 +2,8 @@ query text {
   allUsers{
     nodes{
       id
-      userExtraInfoByUserId{
-        id
-        email
-      }
       email
+      phone
     }
   }
 }

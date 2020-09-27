@@ -144,9 +144,8 @@ export const tableExtensionPlugin: Plugin = (builder) => {
         return accFields;
       }
       // now we check the attribute smart tag
-      const { extensionFrom = [] } = fk.keyAttributes[0].tags;
-      const extensionFromArray = Array.isArray(extensionFrom) ? extensionFrom : [extensionFrom];
-      if (!extensionFromArray.includes(table.name)) {
+      const { backwardExtension } = fk.keyAttributes[0].tags;
+      if (!backwardExtension) {
         return accFields;
       }
       const innerTableFields = extendRelationWithAnother(fk, true, build as GraphileBuild, context);
@@ -158,9 +157,8 @@ export const tableExtensionPlugin: Plugin = (builder) => {
       if (cur.type !== 'f' || cur.foreignClassId !== table.id) {
         return acc;
       }
-      const { extensionOf = [] } = cur.keyAttributes[0].tags;
-      const extensionToArray = Array.isArray(extensionOf) ? extensionOf : [extensionOf];
-      if (!extensionToArray.includes(table.name)) {
+      const { forwardExtension } = cur.keyAttributes[0].tags;
+      if (!forwardExtension) {
         return acc;
       }
       // skip it if it is not single key unique constraint
