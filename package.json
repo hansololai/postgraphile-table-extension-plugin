@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-table-extension-plugin",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "PostGraphile plugin that exten a table's fields with another relation (table/view) ",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,16 +20,16 @@
     "url": "https://github.com/hansololai/postgraphile-table-extension-plugin/issues"
   },
   "dependencies": {
-    "postgraphile": "4.6.0",
-    "graphile-build-pg": "4.6.0",
     "graphile-build": "4.6.0",
-    "graphql-tools": "^4.0.7"
+    "graphile-build-pg": "4.6.0",
+    "graphql-tools": "^4.0.7",
+    "postgraphile": "4.6.0"
   },
   "peerDependencies": {
-    "postgraphile": "4.6.0",
-    "graphile-build-pg": "4.6.0",
     "graphile-build": "4.6.0",
-    "graphql-tools": "^4.0.7"
+    "graphile-build-pg": "4.6.0",
+    "graphql-tools": "^4.0.7",
+    "postgraphile": "4.6.0"
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",
