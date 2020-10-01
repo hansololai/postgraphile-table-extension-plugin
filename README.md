@@ -3,7 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/807ee680e7e7ecbfef6a/maintainability)](https://codeclimate.com/github/hansololai/postgraphile-table-extension-plugin/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/807ee680e7e7ecbfef6a/test_coverage)](https://codeclimate.com/github/hansololai/postgraphile-table-extension-plugin/test_coverage)
 [![CircleCI](https://circleci.com/gh/hansololai/postgraphile-table-extension-plugin.svg?style=shield)](https://github.com/hansololai/postgraphile-table-extension-plugin)
-
+[![npm version](https://badge.fury.io/js/postgraphile-table-extension-plugin.svg)](https://badge.fury.io/js/postgraphile-table-extension-plugin)
 ## Motivation
 Sometimes we create want to add some table/view's (call table A) to another table (table B), so that when we query for table B, we could also get the fields in table A without go into the association
 
