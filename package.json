@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-table-extension-plugin",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "PostGraphile plugin that exten a table's fields with another relation (table/view) ",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,29 +19,26 @@
   "bugs": {
     "url": "https://github.com/hansololai/postgraphile-table-extension-plugin/issues"
   },
-  "dependencies": {
-    "graphile-build": "4.6.0",
-    "graphile-build-pg": "4.6.0",
-    "graphql-tools": "^4.0.7",
-    "postgraphile": "4.6.0"
-  },
   "peerDependencies": {
-    "graphile-build": "4.6.0",
-    "graphile-build-pg": "4.6.0",
-    "graphql-tools": "^4.0.7",
-    "postgraphile": "4.6.0"
+    "postgraphile-core": "4.6.0"
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",
+    "@types/jsonwebtoken": "^8.5.1",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "eslint": "^7.10.0",
     "eslint-config-airbnb-typescript": "^10.0.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsdoc": "^30.5.2",
+    "graphile-build": "4.6.0",
+    "graphile-build-pg": "4.6.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^4.0.7",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
     "pg": "^7.18.1",
+    "postgraphile-core": "4.6.0",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
   },

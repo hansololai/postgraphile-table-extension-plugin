@@ -1,4 +1,4 @@
-import { Plugin, Context } from 'postgraphile';
+import { Plugin, Context } from 'postgraphile-core';
 import { PgClass, QueryBuilder, PgConstraint } from 'graphile-build-pg';
 import { IGraphQLToolsResolveInfo } from 'graphql-tools';
 import { GraphileBuild } from './postgraphile_types';
@@ -70,7 +70,7 @@ const extendRelationWithAnother = (fk: PgConstraint, forward:boolean,
                       innerTable.namespace.name,
                       innerTable.name,
                     )} where ${sql.identifier(innerTable.namespace.name,
-                      innerTable.name)}.${sql.identifier(anotherTableKeyAttribute.name)} 
+                      innerTable.name)}.${sql.identifier(anotherTableKeyAttribute.name)}
                       = ${queryBuilder.getTableAlias()}.${sql.identifier(thisTableKeyAttribute.name)}
                   )`, getSafeAliasFromAlias(parsedResolveInfoFragment.alias));
               },
