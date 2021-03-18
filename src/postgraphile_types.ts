@@ -1,4 +1,4 @@
-import { Build } from 'postgraphile';
+import { Build } from 'postgraphile-core';
 import {
   PgAttribute,
   PgProc,
