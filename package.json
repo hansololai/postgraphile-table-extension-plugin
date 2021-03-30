@@ -20,7 +20,9 @@
     "url": "https://github.com/hansololai/postgraphile-table-extension-plugin/issues"
   },
   "peerDependencies": {
-    "postgraphile-core": "4.x"
+    "postgraphile-core": "4.x",
+    "graphile-build-pg": "4.x",
+    "graphql-tools": "^4.0.7"
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",
